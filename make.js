@@ -1,19 +1,17 @@
-module.exports = function make() {
-    let args = [].slice.call(arguments);
+module.exports = function make(...argsFirst) {
+  const args = [].slice.call(argsFirst);
 
-    let func = function () {
-        let result = 0;
-        let lastElem = arguments[arguments.length - 1];
+  return (...argsBase) => {
+    let result;
+    const lastElem = argsBase[argsBase.length - 1];
 
-        if (typeof lastElem === 'function') {
-            result = args.reduce(lastElem, 0);
-        } else {
-            let newArgs = [].slice.call(arguments);
-            return make(...args.concat(newArgs));
-        }
+    if (typeof lastElem === 'function') {
+      result = args.reduce(lastElem);
+    } else {
+      const newArgs = [].slice.call(argsBase);
+      return make(...args.concat(newArgs));
+    }
 
-        return result;
-    };
-
-    return func;
+    return result;
+  };
 };

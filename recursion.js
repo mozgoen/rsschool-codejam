@@ -1,17 +1,19 @@
-module.exports = function recursion(obj, depth = 0, result = []) {
-    if (!result[depth]) {
-        result[depth] = [];
-    }
+module.exports = function recursion(obj, depth = 0, resultFirst = []) {
+  const result = resultFirst;
 
-    if (obj.left) {
-        recursion(obj.left, depth + 1, result);
-    }
+  if (!result[depth]) {
+    result[depth] = [];
+  }
 
-    if (obj.right) {
-        recursion(obj.right, depth + 1, result);
-    }
+  if (obj.left) {
+    recursion(obj.left, depth + 1, result);
+  }
 
-    result[depth].push(obj.value);
+  if (obj.right) {
+    recursion(obj.right, depth + 1, result);
+  }
 
-    return result;
+  result[depth].push(obj.value);
+
+  return result;
 };
