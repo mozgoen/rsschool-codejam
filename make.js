@@ -3,11 +3,10 @@ module.exports = function make() {
 
     let func = function () {
         let result = 0;
+        let lastElem = arguments[arguments.length - 1];
 
-        if (typeof arguments[arguments.length - 1] === 'function') {
-            result = args.reduce(function(sum, current) {
-                return sum + current;
-            }, 0);
+        if (typeof lastElem === 'function') {
+            result = args.reduce(lastElem, 0);
         } else {
             let newArgs = [].slice.call(arguments);
             return make(...args.concat(newArgs));
